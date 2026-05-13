@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命運大廳</title>
+
+    <!-- 字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Serif TC", serif;
+            min-height: 100vh;
+            overflow: hidden;
+
+            background:
+                radial-gradient(circle at top,
+                    rgba(88, 40, 120, 0.6),
+                    transparent 35%),
+                linear-gradient(to bottom,
+                    #060816,
+                    #0f1024,
+                    #07070f);
+
+            color: white;
+            position: relative;
+        }
+
+        /* 星空背景 */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+
+            opacity: 0.7;
+
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+
+            from {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.8);
+            }
+        }
+
+        /* 主畫面 */
+        .container {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 68px;
+            font-weight: 700;
+            letter-spacing: 8px;
+
+            background: linear-gradient(to bottom,
+                    #fff,
+                    #d8b4ff);
+
+            background-clip: text;
+            -webkit-background-clip: text;
+
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #cfcfe8;
+            font-size: 18px;
+            margin-bottom: 55px;
+            opacity: 0.85;
+        }
+
+        /* 功能區 */
+        .menu-grid {
+            width: 100%;
+            max-width: 1200px;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 25px;
+        }
+
+        .card {
+            position: relative;
+            height: 200px;
+
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition: 0.35s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+
+            border: 1px solid rgba(200, 150, 255, 0.5);
+
+            box-shadow:
+                0 0 20px rgba(170, 120, 255, 0.4),
+                0 0 50px rgba(170, 120, 255, 0.15);
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.15),
+                    transparent);
+
+            pointer-events: none;
+        }
+
+        .card-content {
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            gap: 14px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .icon {
+            font-size: 48px;
+
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
+        }
+
+        .card h2 {
+            font-size: 26px;
+            letter-spacing: 2px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #d7d7e7;
+            opacity: 0.85;
+        }
+
+        /* 底部 */
+        .bottom-text {
+            position: absolute;
+            bottom: 25px;
+
+            font-size: 14px;
+            color: #a7a7bd;
+
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        /* 發光圓 */
+        .orb {
+            position: absolute;
+
+            width: 450px;
+            height: 450px;
+
+            background: radial-gradient(circle,
+                    rgba(160, 90, 255, 0.35),
+                    transparent 70%);
+
+            border-radius: 50%;
+
+            filter: blur(30px);
+
+            z-index: 1;
+
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* ===================== */
+        /* 每日運勢頁面 */
+        /* ===================== */
+
+        #fortunePage {
+            display: none;
+
+            position: relative;
+            z-index: 5;
+
+            width: 100%;
+            height: 100vh;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+        }
+
+        .fortune-title {
+            font-size: 60px;
+
+            margin-bottom: 20px;
+
+            background: linear-gradient(to bottom,
+                    #ffffff,
+                    #d69fff);
+
+            background-clip: text;
+            -webkit-background-clip: text;
+
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fortune-subtitle {
+            color: #d8d8f0;
+            margin-bottom: 40px;
+        }
+
+        .crystal-ball {
+
+            width: 200px;
+            height: 200px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(circle at 30% 30%,
+                    rgba(255, 255, 255, 0.8),
+                    rgba(170, 100, 255, 0.4),
+                    rgba(60, 10, 100, 0.9));
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 70px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 0 40px rgba(170, 120, 255, 0.5),
+                0 0 100px rgba(170, 120, 255, 0.2);
+
+            animation: glow 3s infinite alternate;
+        }
+
+        .crystal-ball:hover {
+            transform: scale(1.08);
+        }
+
+        @keyframes glow {
+
+            from {
+                box-shadow:
+                    0 0 40px rgba(170, 120, 255, 0.5),
+                    0 0 100px rgba(170, 120, 255, 0.2);
+            }
+
+            to {
+                box-shadow:
+                    0 0 60px rgba(220, 180, 255, 0.9),
+                    0 0 120px rgba(220, 180, 255, 0.35);
+            }
+        }
+
+        .fortune-result {
+
+            margin-top: 50px;
+
+            width: 80%;
+            max-width: 700px;
+
+            min-height: 120px;
+
+            padding: 30px;
+
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            font-size: 24px;
+            line-height: 1.8;
+
+            color: white;
+
+            box-shadow:
+                0 0 20px rgba(170, 120, 255, 0.15);
+        }
+
+        .back-btn {
+
+            margin-top: 40px;
+
+            padding: 14px 36px;
+
+            border: none;
+            border-radius: 14px;
+
+            background: linear-gradient(135deg,
+                    #9b5cff,
+                    #6f3cff);
+
+            color: white;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 0 20px rgba(170, 120, 255, 0.4);
+        }
+
+        @media(max-width:768px) {
+
+            .title {
+                font-size: 42px;
+            }
+
+            .fortune-title {
+                font-size: 42px;
+            }
+
+            .card {
+                height: 170px;
+            }
+
+            .crystal-ball {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 星空 -->
+    <div class="stars" id="stars"></div>
+
+    <!-- 發光背景 -->
+    <div class="orb"></div>
+
+    <!-- ===================== -->
+    <!-- 大廳 -->
+    <!-- ===================== -->
+
+    <div class="container" id="lobbyPage">
+
+        <div class="title">命運大廳</div>
+
+        <div class="subtitle">
+            選擇你想探索的命運之門
+        </div>
+
+        <div class="menu-grid">
+
+            <div class="card" onclick="goTo('tarot')">
+
+                <div class="card-content">
+
+                    <div class="icon">🃏</div>
+
+                    <h2>塔羅占卜</h2>
+
+                    <p>揭開內心與未來</p>
+
+                </div>
+
+            </div>
+
+            <div class="card" onclick="goTo('zodiac')">
+
+                <div class="card-content">
+
+                    <div class="icon">♈</div>
+
+                    <h2>星座命盤</h2>
+
+                    <p>解析宇宙星象</p>
+
+                </div>
+
+            </div>
+
+            <div class="card" onclick="goTo('fortune')">
+
+                <div class="card-content">
+
+                    <div class="icon">🔮</div>
+
+                    <h2>每日運勢</h2>
+
+                    <p>查看今天的命運</p>
+
+                </div>
+
+            </div>
+
+            <div class="card" onclick="goTo('ai')">
+
+                <div class="card-content">
+
+                    <div class="icon">🤖</div>
+
+                    <h2>AI 靈媒</h2>
+
+                    <p>與 AI 命運師對話</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-text">
+            Destiny System v1.0
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- 每日運勢頁 -->
+    <!-- ===================== -->
+
+    <div id="fortunePage">
+
+        <h1 class="fortune-title">
+            🔮 每日運勢
+        </h1>
+
+        <p class="fortune-subtitle">
+            點擊水晶球，查看今天的命運
+        </p>
+
+        <div class="crystal-ball" onclick="getFortune()">
+            ✨
+        </div>
+
+        <div class="fortune-result" id="fortuneResult">
+
+            今天會發生什麼呢？
+
+        </div>
+
+        <button class="back-btn" onclick="backLobby()">
+            返回大廳
+        </button>
+
+    </div>
+
+    <script>
+
+        // =====================
+        // 星空生成
+        // =====================
+
+        const starsContainer =
+            document.getElementById("stars");
+
+        for (let i = 0; i < 180; i++) {
+
+            const star =
+                document.createElement("div");
+
+            star.classList.add("star");
+
+            star.style.left =
+                Math.random() * 100 + "%";
+
+            star.style.top =
+                Math.random() * 100 + "%";
+
+            star.style.animationDuration =
+                (Math.random() * 3 + 2) + "s";
+
+            star.style.opacity =
+                Math.random();
+
+            starsContainer.appendChild(star);
+        }
+
+        // =====================
+        // 頁面切換
+        // =====================
+
+        function goTo(type) {
+
+            // 隱藏首頁
+            document.getElementById("lobbyPage")
+                .style.display = "none";
+
+            // 顯示每日運勢
+            if (type === "fortune") {
+
+                document.getElementById("fortunePage")
+                    .style.display = "flex";
+            }
+        }
+
+        // =====================
+        // 返回大廳
+        // =====================
+
+        function backLobby() {
+
+            document.getElementById("fortunePage")
+                .style.display = "none";
+
+            document.getElementById("lobbyPage")
+                .style.display = "flex";
+        }
+
+        // =====================
+        // 每日運勢隨機
+        // =====================
+
+        function getFortune() {
+
+            const fortunes = [
+
+                "今天適合做重大決定。",
+                "你可能會遇見重要的人。",
+                "今天財運不錯。",
+                "最近的努力即將得到回報。",
+                "今天適合休息與放鬆。",
+                "有些事情不要太急。",
+                "今天的你魅力特別高。",
+                "可能會收到意外的消息。",
+                "適合開始新的計畫。",
+                "今天運氣普通，但很平穩。",
+                "你正在接近自己的目標。",
+                "晚上可能有好事發生。",
+                "今天容易想太多。",
+                "請相信自己的直覺。",
+                "今天適合學習新東西。",
+                "可能會有意外之財。",
+                "你會得到某人的幫助。",
+                "今天適合整理環境。",
+                "有件事即將迎來轉機。",
+                "今天桃花運提升。",
+                "最近會有新的機會出現。",
+                "今天的你特別有創造力。",
+                "不要錯過眼前的小機會。",
+                "今天適合與朋友聚會。",
+                "最近壓力有點大，記得休息。",
+                "今天的關鍵字是：耐心。",
+                "你會發現新的可能性。",
+                "今天適合冒險一次。",
+                "命運正在悄悄改變。",
+                "你離好運只差一步。"
+
+            ];
+
+            const randomIndex =
+                Math.floor(
+                    Math.random() * fortunes.length
+                );
+
+            document.getElementById("fortuneResult")
+                .innerHTML =
+                fortunes[randomIndex];
+        }
+
+    </script>
+
+</body>
+
+</html>
