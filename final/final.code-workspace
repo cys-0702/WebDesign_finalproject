@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "final",
+			"path": "."
+		},
+		{
+			"name": "static",
+			"path": "../week5/static"
+		},
+		{
+			"name": "templates",
+			"path": "../week5/templates"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "final"
+	}
+}

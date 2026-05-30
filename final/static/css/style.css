@@ -1,0 +1,1411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Serif TC", serif;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background:
+        radial-gradient(circle at top,
+            rgba(88, 40, 120, 0.6),
+            transparent 35%),
+        linear-gradient(to bottom,
+            #060816,
+            #0f1024,
+            #07070f);
+
+    color: white;
+    position: relative;
+}
+
+/* 星空背景 */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+
+    opacity: 0.7;
+
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.8);
+    }
+}
+
+/* 主畫面 */
+.container {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+
+    text-align: center;
+
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 68px;
+    font-weight: 700;
+    letter-spacing: 8px;
+
+    background: linear-gradient(to bottom,
+            #fff,
+            #d8b4ff);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    color: #cfcfe8;
+    font-size: 18px;
+    margin-bottom: 15px;
+    opacity: 0.85;
+}
+
+.welcome-text {
+    color: #f4ebff;
+    font-size: 1rem;
+    margin-bottom: 35px;
+    opacity: 0.9;
+}
+
+/* 功能區 */
+.menu-grid {
+    width: 100%;
+    max-width: 1200px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 25px;
+}
+
+.card {
+    position: relative;
+    height: 200px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: 0.35s;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+
+    border: 1px solid rgba(200, 150, 255, 0.5);
+
+    box-shadow:
+        0 0 20px rgba(170, 120, 255, 0.4),
+        0 0 50px rgba(170, 120, 255, 0.15);
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15),
+            transparent);
+
+    pointer-events: none;
+}
+
+.card-content {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.icon {
+    font-size: 48px;
+
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
+}
+
+.card h2 {
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #d7d7e7;
+    opacity: 0.85;
+}
+
+/* 底部 */
+.bottom-text {
+    position: absolute;
+    bottom: 25px;
+
+    font-size: 14px;
+    color: #a7a7bd;
+
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+
+/* 發光圓 */
+.orb {
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    background: radial-gradient(circle,
+            rgba(160, 90, 255, 0.35),
+            transparent 70%);
+
+    border-radius: 50%;
+
+    filter: blur(30px);
+
+    z-index: 1;
+
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-25px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.crystal-ball {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 30%,
+            rgba(255, 255, 255, 0.8),
+            rgba(170, 100, 255, 0.4),
+            rgba(60, 10, 100, 0.9));
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 70px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 0 40px rgba(170, 120, 255, 0.5),
+        0 0 100px rgba(170, 120, 255, 0.2);
+
+    animation: glow 3s infinite alternate;
+}
+
+.crystal-ball:hover {
+    transform: scale(1.08);
+}
+
+@keyframes glow {
+    from {
+        box-shadow:
+            0 0 40px rgba(170, 120, 255, 0.5),
+            0 0 100px rgba(170, 120, 255, 0.2);
+    }
+
+    to {
+        box-shadow:
+            0 0 60px rgba(220, 180, 255, 0.9),
+            0 0 120px rgba(220, 180, 255, 0.35);
+    }
+}
+
+.fortune-result {
+    margin-top: 50px;
+
+    width: 80%;
+    max-width: 700px;
+
+    min-height: 120px;
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    font-size: 24px;
+    line-height: 1.8;
+
+    color: white;
+
+    box-shadow:
+        0 0 20px rgba(170, 120, 255, 0.15);
+}
+
+.back-btn {
+    margin-top: 40px;
+
+    padding: 14px 36px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(135deg,
+            #9b5cff,
+            #6f3cff);
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 20px rgba(170, 120, 255, 0.4);
+}
+
+.auth-top-group {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 11;
+    display: flex;
+    gap: 8px;
+}
+
+.auth-top-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #9b5cff, #6f3cff);
+    color: white;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(155, 92, 255, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-top-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(155, 92, 255, 0.25);
+}
+
+.auth-register-btn {
+    background: linear-gradient(135deg, #ff8f8f, #ff5a98);
+}
+
+.auth-logout-btn {
+    background: linear-gradient(135deg, #ff5a5a, #c90000);
+}
+
+/* ===================== */
+/* 頭像下拉選單樣式 */
+/* ===================== */
+
+/* 頭像下拉選單容器 */
+.avatar-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 頭像按鈕 */
+.avatar-btn {
+    /* 移除預設按鈕樣式 */
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+
+    /* 顯示頭像和箭頭 */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    /* 頭像框樣式 */
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: rgba(170, 120, 255, 0.2);
+    border: 1px solid rgba(170, 120, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* 頭像按鈕懸停效果 */
+.avatar-btn:hover {
+    background: rgba(170, 120, 255, 0.35);
+    border-color: rgba(170, 120, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+/* 頭像圖片 */
+.avatar-img {
+    /* 圓形頭像 */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 下拉箭頭 */
+.avatar-arrow {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: transform 0.3s ease;
+}
+
+/* 下拉箭頭動畫（選單打開時） */
+.avatar-btn.active .avatar-arrow {
+    transform: rotate(180deg);
+}
+
+/* 下拉式選單 */
+.avatar-menu {
+    /* 絕對定位，相對於avatar-btn */
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 21;
+
+    /* 寬度和背景 */
+    width: 280px;
+    background: rgba(12, 8, 30, 0.95);
+    border-radius: 16px;
+    border: 1px solid rgba(170, 120, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+    /* 限制最大高度，超出時顯示捲軸 */
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* 顯示動畫 */
+    animation: slideDown 0.2s ease-out;
+}
+
+/* 下拉選單出現動畫 */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 菜單區塊 */
+.menu-section {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(170, 120, 255, 0.15);
+}
+
+/* 最後一個區塊不顯示底部邊框 */
+.menu-section:last-child {
+    border-bottom: none;
+}
+
+/* 頭像上傳區塊 */
+.avatar-upload-section {
+    text-align: center;
+}
+
+/* 頭像上傳標籤 */
+.avatar-upload-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* 隱藏檔案輸入 */
+.avatar-file-input {
+    display: none;
+}
+
+/* 上傳圖片按鈕 */
+.avatar-upload-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #9b5cff, #6f3cff);
+    color: white;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 上傳按鈕懸停效果 */
+.avatar-upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(155, 92, 255, 0.3);
+}
+
+/* 用戶資訊區塊 */
+.user-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 菜單項目 */
+.menu-item {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    word-break: break-word;
+}
+
+/* 菜單項目中的強調文字 */
+.menu-item strong {
+    color: rgba(170, 120, 255, 0.8);
+    font-weight: 600;
+}
+
+/* 元智幣區塊 */
+.coin-section {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/* 元智幣顯示 */
+.coin-display {
+    margin-bottom: 12px;
+}
+
+/* 元智幣標題 */
+.coin-title {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 4px;
+}
+
+/* 元智幣數值 */
+.coin-value {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 獲得元智幣按鈕 */
+.coin-earn-btn {
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #ffa500, #ff8c00);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 獲得元智幣按鈕懸停效果 */
+.coin-earn-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 140, 0, 0.3);
+}
+
+/* 登出區塊 */
+.logout-section {
+    padding: 8px 16px;
+}
+
+/* 菜單中的登出按鈕 */
+.logout-menu-btn {
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #ff5a5a, #c90000);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 登出按鈕懸停效果 */
+.logout-menu-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 90, 90, 0.3);
+}
+
+.user-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 20, 0.82);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    padding: 16px;
+}
+
+.user-modal-card {
+    width: min(520px, 100%);
+    border-radius: 24px;
+    background: rgba(12, 8, 30, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 40px rgba(120, 70, 255, 0.25);
+    padding: 26px;
+}
+
+.user-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.modal-close-btn {
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.user-modal-body {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.user-info-row {
+    display: flex;
+    justify-content: space-between;
+    color: #dcd6ff;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.user-coin-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 22px 20px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(255, 202, 84, 0.16), rgba(255, 121, 121, 0.12));
+    border: 1px solid rgba(255, 215, 0, 0.18);
+}
+
+.coin-title {
+    color: #f8e6b6;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.coin-action-btn {
+    min-width: 140px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ffd15c, #ff7f7f);
+    color: #161823;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.coin-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(255, 145, 90, 0.28);
+}
+
+.coin-value {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.rpg-card {
+    width: min(620px, 100%);
+    margin: 0 auto;
+    padding: 28px;
+    display: grid;
+    gap: 18px;
+    border-radius: 28px;
+    background: rgba(18, 12, 44, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 50px rgba(125, 80, 255, 0.2);
+}
+
+.rpg-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f4f0ff;
+    font-weight: 700;
+}
+
+.rpg-monster {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 120, 135, 0.14), rgba(71, 11, 84, 0.72));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.rpg-monster-name {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #ffd77e;
+}
+
+.rpg-monster-health {
+    color: #e0d7ff;
+}
+
+.rpg-log {
+    min-height: 90px;
+    padding: 18px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    color: #e0ddff;
+    line-height: 1.6;
+}
+
+.rpg-action-btn {
+    padding: 16px 24px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #8f6bff, #ff7fa3);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rpg-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(143, 92, 255, 0.25);
+}
+
+#rpgPage {
+    display: none;
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    min-height: 100vh;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    overflow-y: auto;
+
+    padding: 40px 20px 80px;
+}
+
+#authPage {
+    display: none;
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    min-height: 100vh;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    overflow-y: auto;
+
+    padding: 40px 20px 80px;
+}
+
+.auth-tab-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e6e1ff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.auth-tab-btn.auth-active {
+    background: linear-gradient(135deg, #9b5cff, #6f3cff);
+    color: white;
+}
+
+.login-alert,
+.register-alert {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    display: none;
+}
+
+@media(max-width:768px) {
+    .auth-top-group {
+        top: 14px;
+        right: 14px;
+        gap: 6px;
+    }
+
+    .auth-top-btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+.register-card {
+    width: 100%;
+    max-width: 520px;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 20px rgba(170, 120, 255, 0.15);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #e8e4ff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: rgba(155, 92, 255, 0.8);
+    box-shadow: 0 0 0 4px rgba(155, 92, 255, 0.12);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #9b5cff, #6f3cff);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(170, 120, 255, 0.35);
+}
+
+.register-meta {
+    margin-top: 18px;
+    color: #d8d8f0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.register-alert {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    display: none;
+}
+
+.register-alert.success {
+    background: rgba(106, 200, 120, 0.2);
+    color: #d6ffd8;
+    border: 1px solid rgba(106, 200, 120, 0.4);
+}
+
+.register-alert.error {
+    background: rgba(255, 110, 110, 0.18);
+    color: #ffe6e6;
+    border: 1px solid rgba(255, 110, 110, 0.35);
+}
+
+@media(max-width:768px) {
+    .title {
+        font-size: 42px;
+    }
+
+    .fortune-title {
+        font-size: 42px;
+    }
+
+    .card {
+        height: 170px;
+    }
+
+    .crystal-ball {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+/* 卡片容器，設定透視度讓 3D 效果更真實 */
+.card-container {
+    width: 140px;
+    height: 230px;
+    perspective: 1000px;
+}
+
+/* 卡片內層，控制翻轉動畫時間與保留 3D 空間 */
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+/* 當卡片加上 flipped 類別時，翻轉 180 度 */
+.card-container.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* 牌的正面與背面共用設定：隱藏背面、絕對定位疊加 */
+.card-front,
+.card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 牌背：原本的未翻開狀態 */
+.card-front {
+    background-color: rgba(0, 0, 0, 0.3);
+    /* 備用底色 */
+    background-image: url('/static/images/card-back.jpg');
+    /* 替換成你的牌背路徑 */
+    background-size: cover;
+    background-position: center;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    color: transparent;
+    /* 隱藏原本的文字 */
+}
+
+/* 牌面：翻開後的狀態 */
+.card-back {
+    background-color: rgba(20, 15, 40, 0.8);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(170, 120, 255, 0.8);
+    transform: rotateY(180deg);
+    position: relative;
+    /* 讓裡面的文字標籤可以定位在底部 */
+    overflow: hidden;
+    /* 確保卡片底部的圓角不會被文字標籤蓋住 */
+}
+
+#tarotFanArea {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: visible;
+    transform-origin: center 600px;
+}
+
+.fan-card {
+    position: absolute;
+    width: 50px;
+    /* 稍微縮小一點以容納22張牌 */
+    height: 90px;
+    background-color: rgba(20, 15, 40, 0.9);
+    /* 備用底色 */
+
+    /* 🌟 關鍵新增：使用金色星星卡背圖片 */
+    background-image: url('/static/images/card-back2.jpg');
+    /* 將此處替換為你實際存放金色星星圖片文件的路徑 */
+    background-size: cover;
+    /* 填滿卡片區域並保持比例裁剪 */
+    background-position: center;
+    /* 圖片置中 */
+
+    border: 1px dashed rgba(170, 120, 255, 0.6);
+    /* 保持虛線 */
+    border-radius: 6px;
+    cursor: pointer;
+
+    /* 核心魔法：將旋轉中心點設在卡片下方 300px 處，製造弧形半徑 */
+    transform-origin: center 300px;
+
+    /* 讀取 JS 設定的角度，並加上過渡動畫 */
+    transform: rotate(var(--rot)) translateY(0);
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 滑鼠懸停時，牌會稍微抽高亮起 - 修改此塊 */
+.fan-card:hover {
+    transform: rotate(var(--rot)) translateY(-20px);
+
+
+    z-index: 50 !important;
+    /* 確保浮出的牌在最上層 */
+}
+
+/* 當牌被點擊選走後隱藏 */
+.fan-card.picked {
+    opacity: 0;
+    pointer-events: none;
+    /* 點過不能再點 */
+}
+
+#dreamInput:focus {
+    border-color: rgba(170, 120, 255, 0.8) !important;
+    box-shadow: 0 0 15px rgba(170, 120, 255, 0.3);
+}
+
+#dreamResult::-webkit-scrollbar {
+    width: 6px;
+}
+
+#dreamResult::-webkit-scrollbar-thumb {
+    background: rgba(170, 120, 255, 0.5);
+    border-radius: 10px;
+}
+
+/* ===================== */
+/* 答案之書外加樣式 */
+/* ===================== */
+.open-book-wrapper {
+    cursor: pointer;
+    width: 90%;
+    max-width: 760px;
+    height: 480px;
+    position: relative;
+    z-index: 5;
+    perspective: 1500px;
+    /* 3D 透視感 */
+    transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.open-book-wrapper:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* 紅色書皮 */
+.book-cover {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: #b21f1f;
+    padding: 10px 14px;
+    border-radius: 4px 14px 14px 4px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+/* 內頁通用 */
+.page {
+    flex: 1;
+    background: #fcfaf5;
+    /* 象牙白紙張色 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 左頁 (書脊陰影) */
+.page-left {
+    border-radius: 2px 0 0 2px;
+    border-right: 1px solid #dcdcdc;
+    background: linear-gradient(to right, #fcfaf5 85%, #e6e2d3 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 右頁 (書脊陰影 + 邊框裝飾) */
+.page-right {
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid #fff;
+    background: linear-gradient(to left, #fcfaf5 88%, #dfdcd1 100%);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 復古雙層內框 */
+.page-border {
+    border: 1px solid #444;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-border::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid #444;
+}
+
+/* 答案文字樣式 */
+.answer-text {
+    font-family: "Noto Serif TC", serif;
+    color: #222;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 20px;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+/* 左頁小裝飾 */
+.page-ornament {
+    opacity: 0.8;
+}
+
+/* 獨立的翻動書頁 */
+.flipping-page {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    width: calc(50% - 14px);
+    /* 覆蓋右頁的大小 */
+    height: calc(100% - 20px);
+    background: linear-gradient(to left, #fcfaf5 88%, #dfdcd1 100%);
+    border-radius: 0 10px 10px 0;
+    padding: 30px;
+    transform-origin: left center;
+    /* 軸心在左側書脊 */
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+}
+
+/* 觸發翻頁動畫 */
+.flipping-page.is-flipping {
+    opacity: 1;
+    animation: pageTurn 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes pageTurn {
+    0% {
+        transform: rotateY(0deg);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        box-shadow: -15px 0 25px rgba(0, 0, 0, 0.2);
+    }
+
+    100% {
+        transform: rotateY(-180deg);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        opacity: 0;
+    }
+}
+
+/* 響應式手機版適應 */
+@media (max-width: 768px) {
+    .open-book-wrapper {
+        height: 350px;
+    }
+
+    .answer-text {
+        font-size: 18px;
+        padding: 0 10px;
+    }
+
+    .page-right,
+    .flipping-page {
+        padding: 15px;
+    }
+
+    .page-border::before {
+        inset: 3px;
+    }
+}
+
+/* ===================== */
+/* 雷諾曼卡外加樣式  */
+/* ===================== */
+.lenormand-card-container {
+    width: 100px;
+    height: 150px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.lenormand-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* 點擊後加上 .flipped 類別來觸發翻轉 */
+.lenormand-card-container.flipped .lenormand-card-inner {
+    transform: rotateY(180deg);
+    cursor: default;
+}
+
+.lenormand-card-front,
+.lenormand-card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 牌背：未翻開的樣子 */
+.lenormand-card-front {
+    background: linear-gradient(135deg, #3c2a63, #1a103c);
+    border: 2px dashed rgba(170, 120, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+}
+
+/* 牌面：翻開後的樣子 */
+.lenormand-card-back {
+    background: linear-gradient(135deg, rgba(20, 15, 40, 0.9), rgba(40, 30, 70, 0.9));
+    border: 1px solid rgba(170, 120, 255, 0.8);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.lenormand-card-back span {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#lenormandQuestion:focus {
+    border-color: rgba(170, 120, 255, 0.8) !important;
+    box-shadow: 0 0 15px rgba(170, 120, 255, 0.3);
+}
+
+/* ===================== */
+/* 每日運勢頁面 */
+/* ===================== */
+
+#fortunePage {
+    display: none;
+
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    min-height: 100vh;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    overflow-y: auto;
+
+    padding: 40px 20px 80px;
+}
+
+.fortune-title {
+    font-size: 60px;
+
+    margin-bottom: 20px;
+
+    background: linear-gradient(to bottom,
+            #ffffff,
+            #d69fff);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.fortune-subtitle {
+    color: #d8d8f0;
+    margin-bottom: 40px;
+}
+
+.fortune-calendar-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 4px;
+
+    margin-top: 10px;
+}
+
+.fortune-day {
+
+    padding: 6px;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, .05);
+
+    font-size: 12px;
+}
